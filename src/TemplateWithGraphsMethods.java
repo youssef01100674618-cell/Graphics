@@ -44,7 +44,7 @@ public class TemplateWithGraphsMethods extends JFrame  implements GLEventListene
         gl.glBegin(GL.GL_POINTS);
         gl.glColor3f(1.0f,0.0f,0.0f); // color of points
         // invoke ur methods here
-        polarCircle(gl,100,200,200);
+        setAxis(gl , 200,200);
         gl.glEnd();
 
     }
@@ -59,6 +59,66 @@ public class TemplateWithGraphsMethods extends JFrame  implements GLEventListene
 
     }
     // tools
+
+    private void setAxis(GL gl, double originX, double originY) {
+        float red;
+        float green;
+        float blue;
+
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+
+        // حفظ الحالة الحالية للشاشة
+        gl.glPushMatrix();
+
+        // تحريك نقطة الأصل (Origin) للنقطة اللي إنت عايزها
+        gl.glTranslated(originX, originY, 0);
+
+        //////////////////////////////
+        // رسم محور X ومحور Y
+        red = 0.0f;
+        green = 0.2f;
+        blue = 0.4f;
+        gl.glColor3f(red, green, blue);
+
+        gl.glLineWidth(2.0f);
+
+        gl.glBegin(GL.GL_LINES);
+        // line for y-axis
+        gl.glVertex2d(0, 140);
+        gl.glVertex2d(0, -140);
+
+        // line for x-axis
+        gl.glVertex2d(240, 0);
+        gl.glVertex2d(-240, 0);
+        gl.glEnd();
+
+        /////////////////////
+        // رسم الأسهم (Arrow heads)
+        gl.glBegin(GL.GL_TRIANGLES);
+
+        // أسهم محور Y
+        gl.glVertex2d(0, 150);
+        gl.glVertex2d(-5, 140);
+        gl.glVertex2d(5, 140);
+
+        gl.glVertex2d(0, -150);
+        gl.glVertex2d(-5, -140);
+        gl.glVertex2d(5, -140);
+
+        // أسهم محور X
+        gl.glVertex2d(250, 0);
+        gl.glVertex2d(240, -5);
+        gl.glVertex2d(240, 5);
+
+        gl.glVertex2d(-250, 0);
+        gl.glVertex2d(-240, -5);
+        gl.glVertex2d(-240, 5);
+
+        gl.glEnd();
+
+        // إرجاع الشاشة لحالتها الأصلية
+        gl.glPopMatrix();
+    }
 
     public void  setPixel(GL gl ,double x , double y , double xC , double yC) {
         int myX = toInt(Math.round(x + xC));
